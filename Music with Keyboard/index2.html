@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <meta lang="en-US" />
+    <title>JavaScript Drum Kit</title>
+</head>
+<style>
+    *,
+    *::before,
+    *::after {
+        box-sizing: border-box;
+    }
+
+    .container {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        width: 100vw;
+        height: 100vh;
+        padding: 62px;
+        background-image: url(./assets/background.jpg);
+    }
+
+    .tile {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        flex: 1 1 100px;
+        height: 90px;
+        border-style: solid;
+        border-color: white;
+        border-width: 4px;
+        margin: 10px;
+        background-color: rgba(58, 44, 44, 0.768);
+        transition: background-color 0.3s;
+    }
+
+
+    .tile:hover {
+        background-color: red;
+    }
+
+    .tile>*:first-child {
+        color: white;
+    }
+
+    .tile>*:last-child {
+        color: yellow;
+    }
+</style>
+
+<body>
+    <div class="container" tabindex="0">
+
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const buttons = {
+                'A': { name: "clap", sound: "./assets/clap.wav" },
+                'S': { name: "hihat", sound: "./assets/hihat.wav" },
+                'D': { name: "kick", sound: "./assets/kick.wav" },
+                'F': { name: "openhat", sound: "./assets/openhat.wav" },
+                'G': { name: "boom", sound: "./assets/boom.wav" },
+                'H': { name: "ride", sound: "./assets/kick.wav" },
+                'J': { name: "share", sound: "./assets/clap.wav" },
+                'k': { name: "tom", sound: "./assets/hihat.wav" },
+                'L': { name: "tink", sound: "./assets/openhat.wav" }
+            }
+
+            const createButton = (key, info) => {
+                const template = document.createElement('template');
+                const view = `
+                    <div class="tile" data-key="${key}">
+                    <div>${key}</div>
+                    <div>${info.name}</div>
+                    </div>
+                `;
+                template.innerHTML = view.trim();
+                return template.content.firstChild;
+            }
+
+            const keys = Object.keys(buttons)
+            const container = document.querySelector(".container")
+            keys.forEach(it => {
+                container.appendChild(createButton(it, buttons[it]))
+            })
+
+            const playSound = (soundSrc) => {
+                const audio = new Audio(soundSrc);
+                audio.play();
+            };
+
+            container.addEventListener('click', (event) => {
+                const tileEl = event.target.closest('.tile');
+                if (tileEl) {
+                    const key = tileEl.dataset.key;
+                    if (buttons[key]) {
+                        playSound(buttons[key].sound);
+                    }
+                }
+            });
+
+            document.addEventListener('keydown', (event) => {
+                const key = event.key.toUpperCase();
+                if (buttons[key]) {
+                    playSound(buttons[key].sound);
+                }
+            });
+        })
+    </script>
+</body>
+
+</html>

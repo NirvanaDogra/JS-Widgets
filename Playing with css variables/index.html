@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>JS practice</title>
+    <style>
+        :root {
+            --blur: 0px;
+            --spacing: 10px;
+            --color: red;
+        }
+        span {
+            color: var(--color);
+        }
+        img {
+            padding: var(--spacing);
+            background-color: var(--color);
+            filter: blur(var(--blur));
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>
+            This is a <span>JS</span> project on global variable
+        </h1>
+        <div class="controls">
+            <label for="spacing-slider">Spacing:</label>
+            <input type="range" name=spacing min="1" max="100" value="10" id="spacing-slider" data-unit="px">
+
+            <label for="bluring-slider">Blur:</label>
+            <input type="range" name=blur min="0" max="100" value="0" id="bluring-slider" data-unit="px">
+
+            <label for="color-picker">Base color:</label>
+            <input type="color" name="color" id="color-picker">
+        </div>
+        <br>
+        <img src="./background.jpg" width="500" alt="img">
+    </div>
+    <script>
+        const inputs = document.querySelectorAll(".controls input")
+        console.log(inputs)
+        function handleValueChange() {
+           document.documentElement.style.setProperty(`--${this.name}`, this.value+(this.dataset["unit"] || ''))
+        }
+        inputs.forEach(input => input.addEventListener("input", handleValueChange))
+      
+    </script>
+</body>
+</html>

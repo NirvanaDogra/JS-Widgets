@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="US-en">
+    <title>CSS Text Shadow Mouse Move Effect</title>
+    <meta charset="UTF-8">
+    <style>
+        div {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        h1 {
+            text-shadow: 5px 5px 0 gray;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <h1>What the <br> flex box?!</h1>
+    </div>
+    <script>
+        const text = document.querySelector("h1")
+        function handleMouseMove(event) {
+            let x = (event.screenX - window.innerWidth / 2) / window.innerWidth
+            let y = (event.screenY - window.innerHeight / 2) / window.innerHeight
+            text.style.textShadow = `${x * 10}px ${y * 10}px 0 gray`
+        }
+        document.addEventListener("mousemove", handleMouseMove)
+    </script>
+</body>
+
+</html>

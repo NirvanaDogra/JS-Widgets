@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        .item {
+            display: flex;
+            flex-direction: row;
+        }
+
+        .strick {
+            text-decoration-line: line-through;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <form id="todoForm">
+            <input type="text" name="inputTask" placeholder="Enter a task" id="inputTask" required>
+            <button type="submit">Add Task</button>
+            <ul class="todo-list"></ul>
+        </form>
+    </div>
+
+    <script>
+        // Local storage handler
+        const storage = (() => {
+            function set(data) {
+                localStorage.setItem("items", JSON.stringify(data));
+            }
+
+            function get() {
+                const items = localStorage.getItem("items");
+                return items ? JSON.parse(items) : [];
+            }
+
+            return { set, get };
+        })();
+
+        // UI handler for the todo list
+        const todoUI = (() => {
+            function renderItems(data, container) {
+                container.innerHTML = data.map((item, index) => `
+                        <li>
+                            <input type="checkbox" id="item-${index}" ${item.isChecked ? "checked" : ""} data-index="${index}">
+                            <label for="item-${index}" class="${item.isChecked ? "strick" : ""}">${item.item}</label>
+                        </li>
+                    `).join('');
+            }
+
+            return { renderItems };
+        })();
+
+        // Main application logic
+        (() => {
+            const data = storage.get();
+            const listContainer = document.querySelector(".todo-list");
+            const input = document.getElementById("inputTask");
+            const form = document.getElementById("todoForm");
+
+            function addItem(event) {
+                event.preventDefault();
+                const newItem = { item: input.value.trim(), isChecked: false };
+                if (newItem.item) {
+                    data.push(newItem);
+                    storage.set(data);
+                    todoUI.renderItems(data, listContainer);
+                    form.reset();
+                }
+            }
+
+            let preClicked = -1
+            let keyPressed = false
+            function toggleItem(event) {
+                if (!event.target.matches('input[type="checkbox"]')) return;
+                const index = event.target.dataset.index;
+                data[index].isChecked = event.target.checked;
+    
+                if (preClicked >= 0 && keyPressed == true) {
+                    const clickedIndex = index
+                    const start = Math.min(preClicked, clickedIndex)
+                    const end = Math.max(preClicked, clickedIndex)
+                    for (let i = start; i <= end; i++) {
+                        data[i].isChecked = data[index].isChecked
+                    }
+                }
+                preClicked = index
+                storage.set(data);
+                todoUI.renderItems(data, listContainer);
+            }
+
+            // Initial render
+            todoUI.renderItems(data, listContainer);
+
+            // Event listeners
+            form.addEventListener("submit", addItem);
+            listContainer.addEventListener("click", toggleItem);
+            document.addEventListener("keydown", () => {
+                if (event.shiftKey) {
+                    keyPressed = true
+                }
+            })
+
+            document.addEventListener("keyup", () => {
+                keyPressed = false
+            })
+        })();
+    </script>
+</body>
+</html>

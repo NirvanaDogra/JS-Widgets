@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Drum Kit</title>
+</head>
+<style>
+    .drum-kit-container {
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        background-image: url(./assets/background.jpg);
+        margin: 0%;
+    }
+
+    .button {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 80px;
+        height: 80px;
+        margin: 16px;
+        background: rgba(0, 0, 0, 0.391);
+        border-style: solid;
+        border-color: black;
+        border-width: 4px;
+        transition: all 0.07s;
+    }
+
+    .button-activated {
+        transform: scale(1.1);
+        border-color: gold;
+        box-shadow: 0 0 5px gold;
+    }
+
+
+    .button> div:first-child {
+        background-color: rgba(134, 74, 74, 0);
+        color: white;
+        font-size: larger;
+        font-variant-caps: titling-caps;
+    }
+
+    .button>div:last-child {
+        color: gold;
+        font-size: larger;
+        text-transform:uppercase;
+        font-size: small;
+    }
+
+</style>
+
+<body>
+    <div class="drum-kit-container"></div>
+</body>
+<script>
+    const container = document.querySelector(".drum-kit-container");
+    const musicMap = {
+        A: {
+            button: null,
+            music: "boom",
+            file: "./assets/boom.wav",
+        },
+        B: {
+            button: null,
+            music: "clap",
+            file: "./assets/clap.wav",
+        },
+        C: {
+            button: null,
+            music: "hihat",
+            file: "./assets/hihat.wav",
+        },
+        D: {
+            button: null,
+            music: "openhar",
+            file: "./assets/openhat.wav",
+        }
+    };
+
+    function createButton(key, musicType) {
+        const button = document.createElement("div");
+        const keyElement = document.createElement("div");
+        const musicElement = document.createElement("div");
+        keyElement.innerHTML = key;
+        musicElement.innerHTML = musicType;
+
+        button.appendChild(keyElement);
+        button.appendChild(musicElement);
+
+        button.classList.add("button");
+        return button;
+    }
+
+    console.log(Object.keys(musicMap));
+    Object.keys(musicMap).forEach((it) => {
+        musicMap[it].button = createButton(it, musicMap[it].music);
+        container.appendChild(musicMap[it].button);
+    });
+
+    document.addEventListener("keydown", (keyEvent) => {
+        key = keyEvent.key.toUpperCase();
+        if (Object.keys(musicMap).includes(key)) {
+            let button = musicMap[key].button
+            button.classList.add("button-activated")
+            let file = musicMap[key].file;
+            console.debug("playing", file)
+            const snd = new Audio(file)
+            snd.play()
+            setTimeout(() => {
+                button.classList.remove("button-activated")
+            }, 0.07*1000)
+        }
+    });
+</script>
+
+</html>
