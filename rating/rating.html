@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8" />
+    <style>
+      .continer {
+        display: inline;
+        flex-direction: row;
+        justify-content: center;
+      }
+      .continer div {
+        display: inline;
+        font-size: 100px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="continer"></div>
+    <script>
+      function toggle(state) {
+        switch (state) {
+          case "\u2605": {
+            return "\u2606";
+            break;
+          }
+          case "\u2606": {
+            return "\u2605";
+            break;
+          }
+          default: {
+            break;
+          }
+        }
+      }
+      function showRatingWidget(continerClass, noOfStarts) {
+        const continer = document.querySelector(continerClass);
+        const stars = [];
+        for (let i = 0; i < noOfStarts; i++) {
+          const star = document.createElement("div");
+          stars.push(star);
+          star.innerText = "\u2606";
+          star.pos = i;
+          star.addEventListener("click", (event) => {
+            for (let i = 0; i < noOfStarts; i++) {
+              if (event.currentTarget.pos >= i) {
+                stars[i].innerText = "\u2605";
+              } else {
+                stars[i].innerText = "\u2606";
+              }
+            }
+          });
+          continer.appendChild(star);
+        }
+      }
+
+      showRatingWidget(".continer", 5);
+    </script>
+  </body>
+</html>
