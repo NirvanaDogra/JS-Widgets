@@ -38,10 +38,11 @@
     </div>
     <script>
         const inputs = document.querySelectorAll(".controls input")
-        console.log(inputs)
         function handleValueChange() {
            document.documentElement.style.setProperty(`--${this.name}`, this.value+(this.dataset["unit"] || ''))
         }
+
+        
         inputs.forEach(input => input.addEventListener("input", handleValueChange))
       
     </script>

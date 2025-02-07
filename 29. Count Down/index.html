@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Count Down</title>
+    <style>
+        html,
+        ::after,
+        ::before {
+            box-sizing: border-box;
+        }
+
+        body {
+            padding: 0px;
+            margin: 0px;
+            width: 100vw;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+
+        .header {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            justify-content: space-around;
+            border-style: solid;
+            border-width: 2px;
+
+        }
+
+        .header>div {
+            font-size: 2rem;
+            text-transform: uppercase;
+            background: rgba(0, 0, 0, 0.1);
+            border: 3px solid rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            padding: 1rem;
+        }
+
+        .continer {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+
+        }
+
+
+
+        .countDown {
+            font-size: 9rem;
+            padding: 4px;
+        }
+
+        .beBackAt {
+            font-size: 2rem;
+            padding: 4px;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <div data-time="1">Work 1</div>
+        <div data-time="5">Work 5</div>
+        <div data-time="15">Quick 15</div>
+        <div data-time="20">Snack 20</div>
+        <div data-time="30">Lunch Break</div>
+        <input type="number" placeholder="Enter mins">
+    </header>
+
+    <div class="continer">
+        <div class="countDown">Click a timer</div>
+    </div>
+
+    <script>
+        let countdownInterval
+        function countDown(min) {
+            min = min - 1
+            let sec = 59
+            const timeEl = document.querySelector(".countDown")
+            return function () {
+                sec = sec - 1
+                if (sec == 0) {
+                    min = min - 1
+                    sec = 59
+                }
+                if (min < 0) {
+                    timeEl.textContent = "completed"
+                    console.log("done")
+                    if (!countdownInterval) {
+                        throw new Error("❌ No active timer found to clear!");
+                    }
+                    clearInterval(countdownInterval)
+                    console.info(countdownInterval)
+                } else {
+                    timeEl.textContent = `${min}:${sec}`
+                }
+            }
+        }
+
+        function handleStart(time) {
+            if (!countdownInterval) {
+                console.error("❌ No active timer found to clear!");
+            }
+            console.info(countdownInterval)
+            clearInterval(countdownInterval)
+            countdownInterval = setInterval(countDown(time), 1000)
+        }
+
+        const buttons = document.querySelector(".header")
+        const beBackAt = document.querySelector(".beBackAt")
+
+        buttons.addEventListener('click', handleButtonClick)
+
+        function handleButtonClick(event) {
+            const time = event.target.dataset.time
+            if (time) {
+                handleStart(time)
+            }
+        }
+    </script>
+
+</body>
+
+</html>

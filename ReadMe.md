@@ -1,0 +1,1 @@
+Note1: [Centering the elements](https://www.freecodecamp.org/news/how-to-center-anything-with-css-align-a-div-text-and-more/)
