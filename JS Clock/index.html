@@ -11,6 +11,7 @@
             --clock-hand-height: 2px;
             --clock--hand-width: calc(var(--clock-width)/2)
         }
+
         html {
             padding: 0;
             box-sizing: border-box;
@@ -21,7 +22,7 @@
             box-sizing: border-box;
         }
 
-        
+
         .clock {
             width: var(--clock-width);
             height: var(--clock-height);
@@ -31,16 +32,28 @@
             border-radius: 100px;
             position: relative;
         }
+
         .hand {
             position: absolute;
             top: 50%;
+            left:50%;
             width: var(--clock--hand-width);
             height: var(--clock-hand-height);
+            transform: rotate(270deg);
+            transform-origin: left center;
+        }
+        .hr {
+            background-color: blue;
+        }
+        .sec {
             background-color: red;
-            transform-origin: right center;
+        }
+        .min {
+            background-color: green;
         }
     </style>
 </head>
+
 <body>
     <div class="clock">
         <div class="hands">
@@ -51,31 +64,33 @@
     </div>
 
     <script>
-        let sec = 0
-        let min = 0 
-        let hr = 0
+        function clock() {
+            const now = new Date();
+            let sec = now.getSeconds();
+            let min = now.getMinutes();
+            let hr = now.getHours() % 12;
 
-        const secEl = document.querySelector(".sec");
-        const minEl = document.querySelector(".min");
-        const hrEl = document.querySelector(".hr");
+            const secEl = document.querySelector(".sec");
+            const minEl = document.querySelector(".min");
+            const hrEl = document.querySelector(".hr");
+            return function timeKeeper() {
+                sec += 1
+                min = min + parseInt(sec / 60)
+                sec = sec % 60
 
-        console.log(secEl)
-        function timeKeeper() {
-            sec += 1
-            min = min+parseInt(sec/60)
-            sec = sec % 60 
+                hr = (hr + parseInt(min / 60)) % 12
 
-            hr = (hr+parseInt(min/60))%12
+                min = min % 60
+                console.log(hr, min, sec)
+                secEl.style.transform = `rotate(${270+360 * sec / 60}deg)`;
+                minEl.style.transform = `rotate(${270+ 360 * min / 60}deg)`;
+                hrEl.style.transform = `rotate(${270 + (360 * hr / 12)}deg)`;
 
-            min = min % 60
-            console.log(hr, min, sec)
-            secEl.style.transform = `rotate(${360*sec/60}deg)`;
-            minEl.style.transform = `rotate(${360*min/60}deg)`;
-            hrEl.style.transform = `rotate(${360*hr/12}deg)`;
-
+            }
         }
 
-        setInterval(timeKeeper, 1000)
+        const timer = clock()
+        setInterval(timer, 1000)
     </script>
 </body>
 
