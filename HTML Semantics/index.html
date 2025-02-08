@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+    <meta charset="UTF-8">
+    <title>This is the title</title>
+</head>
+
+<body>
+    <header>
+        <p>Use <code>&lt;header&gt;</code> for header</p>
+
+        <nav aria-label="primary-navigation">
+            <p>You can use <code>&lt;nav&gt;</code> for navigation.</p>
+            <p>You need to add aria-label if more than 1 navigation exisits</p>
+            <p>or aria-labelledBy="id" where id the id of the heading</p>
+            <ul>
+                <li><a href="#list-types">Lists</a></li>
+                <li><a href="#figures">Figures</a></li>
+                <li><a href="#other">Others</a></li>
+                <li><a href="#froms">Forms</a></li>
+            </ul>
+        </nav>
+        You can use <code>&lt;hr&gt;</code> for the line below &DownArrow;
+    </header>
+    <hr>
+    <main>
+        <article>
+            <h1>This is a article with sections</h1>
+            <p>We should use <code>&lt;main&gt;</code> for main content</p>
+            <p>We should use <code>&lt;article&gt;</code> for conent that had a topic</p>
+
+            <section id="list-types">
+                <h2><abbr title="section 1">[s1]</abbr> Types of list</h2>
+                This is a section. Section should have an <strong>h*</strong> element
+                <ol>
+                    <li>
+                        <h2>Unorder list</h2>
+                        <p>
+                            You can use <code>&lt;ul&gt; with &lt;li&gt;</code>
+                        </p>
+                    </li>
+
+                    <li>
+                        <h2>Order list</h2>
+                        <p>
+                            You can use <code>&lt;ol&gt; with &lt;li&gt;</code>
+                        </p>
+                    </li>
+                </ol>
+            </section>
+
+            <section id="figures">
+                <h2><abbr title="section 2">[s2]</abbr> Figures</h2>
+                <figure>
+                    <img src="https://placehold.co/600x400/png" alt="alternative text"
+                        title="hover on the image to see me" width="200" height="100" loading="lazy">
+                    <figcaption>This caption was added using <code>&lt;caption&gt;</code></figcaption>
+                </figure>
+                <aside>
+                    <p>You can use <code>&lt;aside&gt;</code> for complimentary text. In this case - details about the
+                        image.</p>
+                    <details>
+                        <summary>Guess the place this is ?</summary>
+                        <p><code>&lt;details&gt;</code> and <code>&lt;summary&gt;</code> work together</p>
+                        <p>It is popular</p>
+                    </details>
+                </aside>
+            </section>
+            <section id="other">
+                <h2>Other fun ones</h2>
+                <ol>
+                    <li>&lt;mark&gt; : you can highlight <mark>text</mark> </li>
+                    <li>&lt;abbr&gt; : you give hover full froms <abbr title="Full from">FF</abbr> </li>
+                    <li>&lt;time&gt; : you give time for readers<time datetime="08:00">8 AM</time> </li>
+                    <li>&lt;time&gt; : you give duration with PT3H<time datetime="PT3H">3 hours</time> </li>
+                    <li>&lt;address&gt; : you give address like<address>10021 Main St, Chicago, 248001</address>
+                    </li>
+                </ol>
+            </section>
+        </article>
+        <article id="froms">
+            <h1>Contact us (can be distributed seperatly) as using article</h1>
+            <form method="get">
+                <fieldset>
+                    <legend>Your info</legend>
+                    <p>
+                        <label for="name">Name:</label>
+                        <input name="name" id="name" type="text" autofocus autocomplete="on" required>
+                    </p>
+                    <p>
+                        <label for="phone">Phone Number:</label>
+                        <input name="phone" id="phone" type="tel" pattern="[0-9]{10}" placeholder="Enter you phone number">
+                    </p>
+                    <p>
+                        <label for="pssword">Password:</label>
+                        <input name="password" id="pssword" type="password">
+                    </p>
+
+
+                </fieldset>
+
+                <fieldset>
+                    <legend>Food Options</legend>
+                    <p>
+                        <label for="coffee">Select an coffee Option</label>
+                        <select name="late" id="coffee">
+                            <optgroup label="coffee">
+                                <option value="coffee1">Coffee1</option>
+                                <option value="coffee2">Coffee2</option>
+                            </optgroup>
+                            <optgroup label="late">
+                                <option value="late1">late1</option>
+                                <option value="late2">late2</option>
+                            </optgroup>
+                        </select>
+                    </p>
+                    <p>
+                        <label for="food">Select an food Option</label>
+                        <input name=food id="food" type="text" list="food-list">
+                        <datalist id="food-list">
+                            <option value="food1">food1</option>
+                            <option value="food2">food2</option>
+                            <option value="food3">food3</option>
+                            <option value="food4">food4</option>
+                        </datalist>
+                    </p>
+                </fieldset>
+                <input type="submit" value="Button">
+                <input type="reset" value="reset">
+            </form>
+        </article>
+    </main>
+    <hr>
+    <footer>
+        <p>Use <code>&lt;footer&gt;</code> for footer</p>
+        <a href="#">Scroll to the top</a>
+    </footer>
+</body>
+
+</html>
