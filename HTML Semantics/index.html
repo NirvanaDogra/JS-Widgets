@@ -81,7 +81,7 @@
         </article>
         <article id="froms">
             <h1>Contact us (can be distributed seperatly) as using article</h1>
-            <form method="get">
+            <form onsubmit="return true">
                 <fieldset>
                     <legend>Your info</legend>
                     <p>
@@ -90,7 +90,8 @@
                     </p>
                     <p>
                         <label for="phone">Phone Number:</label>
-                        <input name="phone" id="phone" type="tel" pattern="[0-9]{10}" placeholder="Enter you phone number">
+                        <input name="phone" id="phone" type="tel" pattern="[0-9]{10}"
+                            placeholder="Enter you phone number">
                     </p>
                     <p>
                         <label for="pssword">Password:</label>
@@ -126,8 +127,10 @@
                         </datalist>
                     </p>
                 </fieldset>
-                <input type="submit" value="Button">
-                <input type="reset" value="reset">
+                <!-- <input type="submit" value="Button">  -->
+                <!--  or -->
+                <button type="submit" formaction="https://yourURL" formmethod="get">Submit</button>
+                <button type="reset">Reset</button>
             </form>
         </article>
     </main>
