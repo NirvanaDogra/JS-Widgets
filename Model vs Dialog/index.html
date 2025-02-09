@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        body,
+        html {
+            margin: 0px;
+            padding: 0px;
+        }
+
+        main {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin: 0px;
+            padding: 0px;
+            background-image: url(./assets/background.png);
+            background-size: cover;
+            background-repeat: no-repeat;
+            color: white;
+            height: 100vh;
+        }
+
+        h1 {
+            margin: 8px;
+            /* why is margin effecting the image */
+        }
+
+        p {
+            margin: 8px;
+        }
+
+        button {
+            margin: 8px;
+            padding: 8px;
+            background-color: rgb(222, 138, 3);
+            border: 2px solid red;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            box-shadow: 0px 0px 1rem red;
+        }
+
+        mark {
+            background-color: rgb(120, 4, 4);
+            transition: all 0.2;
+            color: white;
+            padding: 0 4px;
+        }
+
+        mark:hover {
+            background-image: linear-gradient(to bottom right,
+                    yellow,
+                    red,
+                    purple);
+        }
+
+        dialog {
+            position: fixed;
+            background-image: linear-gradient(to bottom right,
+                    yellow,
+                    red,
+                    purple);
+            padding-left: 36px;
+            padding-right: 36px;
+            margin: 0 auto;
+            text-align: center;
+            top: 50%;
+            transform: translateY(-50%);
+            border-radius: 8px;
+            border: 1px solid var(--purple);
+        }
+
+        dialog>header {
+            text-align: center;
+            color: white;
+            text-shadow: 2px 2px 6px black;
+        }
+
+        dialog::backdrop {
+            background: rgba(0, 0, 0, 0.4);
+        }
+    </style>
+
+</head>
+
+<body>
+    <main>
+        <h1>Dialog vs Model</h1>
+        <p>This site accompanies the <mark>Modals vs. Dialogs: Is there a difference?</mark> blog post.</p>
+        <div class="buttons">
+            <button>This button toggles a dialog</button>
+            <button>This button toggles a model</button>
+        </div>
+        <dialog open id="modal">
+            <header>
+                <h2>See powerline concert</h2>
+            </header>
+            <img src="./assets/poster.png" title="powerline concert art tour 95" alt="powerline concert art"
+                height="300" loading="lazy">
+            <footer><button id="close">Close</button></footer>
+        </dialog>
+    </main>
+
+    <script>
+        const buttons = document.querySelector(".buttons").children 
+        console.log( document.querySelector(".buttons")) 
+        const dialogBox = document.getElementsByTagName("dialog")[0]  
+        const close = document.getElementById("close")
+        const dialogBtn = buttons[0]
+        const modalBtn = buttons[1]
+
+        close.addEventListener('click', () => {
+            dialogBox.close()
+        })
+
+        dialogBtn.addEventListener('click', () => {
+            dialogBox.show();
+        })
+
+        modalBtn.addEventListener('click', () => {
+            dialogBox.showModal();
+            console.log( dialogBox.style.backdrop)
+        })
+
+    </script>
+</body>
+
+</html>

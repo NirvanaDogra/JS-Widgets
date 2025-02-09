@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+    <title>Create a Two-Column Layout</title>
+    <style>
+        html {
+            box-sizing: border-box;
+        }
+
+        body {
+            padding: 0px;
+            margin: 0px;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: row;
+            height: 100vh;
+        }
+
+        .left {
+            width: 200px;
+            background: lightblue;
+
+        }
+
+        .right {
+            flex: 1;
+            background: lightgreen;
+        }
+    </style>
+</head>
+
+<body>
+    <main class="container">
+        <div class="left">Col1</div>
+        <div class="right">Col2</div>
+    </main>
+</body>
+
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hamburger Menu</title>
+    <style>
+        #hamburger {
+            display: none;
+            font-size: 24px;
+            cursor: pointer;
+            padding: 10px;
+        }
+
+        /* Navigation styles */
+        .nav {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav a {
+            text-decoration: none;
+            color: #333;
+            padding: 10px;
+        }
+
+        /* Responsive styles */
+        @media (max-width: 500px) {
+            #hamburger {
+                display: block;
+            }
+
+            .nav {
+                position: absolute;
+                top: 50px;
+                left: 0;
+                right: 0;
+                height: 100vh;
+                width: fit-content;
+                background: rgb(195, 197, 191);
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+                transform: translateX(-110%);
+                transition: transform 0.3s ease-in-out;
+                flex-direction: column;
+                align-items: start;
+                width: fit-content;
+                opacity: 0;
+                visibility: hidden;
+            }
+
+            .nav.active {
+                transform: translateX(0%);
+                opacity: 1;
+                visibility: visible;
+            }
+
+            .nav a {
+                padding-left: 100px;
+                padding-right: 100px;
+                border-bottom: 1px solid gray;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <span id="hamburger">&#9776;</span>
+        <nav class="nav">
+            <a href="https://www.google.com">Google</a>
+            <a href="https://www.yahoo.com">Yahoo</a>
+            <a href="https://www.msn.com">MSN</a>
+        </nav>
+    </header>
+    
+    <script>
+      
+        const hamburger = document.getElementById("hamburger");
+        const nav = document.querySelector(".nav");
+        console.log(hamburger.offsetTop)
+        hamburger.addEventListener('click', () => {
+            nav.classList.toggle('active');
+        });
+    </script>
+</body>
+
+</html>
