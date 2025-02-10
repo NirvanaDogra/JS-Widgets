@@ -28,3 +28,8 @@ The &lt;script&gt; element should also go into the head, and should include a sr
 <hr>
 Here's the best rule you can remember: It's only appropriate to use &lt;b&gt;, &lt;i&gt;, &lt;u&gt;to convey a meaning traditionally conveyed with bold, italics, or underline when there isn't a more suitable element; and there usually is. Consider whether &lt;strong&gt;, &lt;em&gt;, &lt;mark&gt; might be more appropriate.
 
+
+
+todo
+-grid layout 
+-js

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UI Chip with Autocomplete</title>
+    <style>
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            border: 1px solid #ccc;
+            max-width: 300px;
+            background: white;
+            position: absolute;
+            z-index: 10;
+        }
+
+        ul li {
+            padding: 8px;
+            cursor: pointer;
+        }
+
+        ul li:hover {
+            background: #f0f0f0;
+        }
+
+        #email-input-container {
+            border: 2px solid black;
+            padding: 14px;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        #email-input {
+            border: none;
+            outline: none;
+            flex-grow: 1;
+            min-width: 150px;
+        }
+
+        .chip {
+            background-color: antiquewhite;
+            border: 1px solid black;
+            padding: 4px 8px;
+            border-radius: 24px;
+            display: inline-flex;
+            align-items: center;
+            margin: 4px;
+        }
+
+        .chip img {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            margin-right: 5px;
+        }
+
+        .chip-remove {
+            margin-left: 8px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <main>
+        <div id="email-input-container">
+            <div id="selected-email-items"></div>
+            <input id="email-input" type="text" placeholder="Enter the email address">
+        </div>
+        <ul id="autocomplete-list"></ul>
+    </main>
+    
+    <script>
+        const autocomplete = document.querySelector("#autocomplete-list");
+        const inputText = document.querySelector("#email-input");
+        const selectedEmailItems = document.querySelector("#selected-email-items");
+
+        function makeApiCall() {
+            return [
+                { url: "https://randomuser.me/api/portraits/thumb/men/1.jpg", name: "name1@gmail.com" },
+                { url: "https://randomuser.me/api/portraits/thumb/women/2.jpg", name: "name2@gmail.com" },
+                { url: "https://randomuser.me/api/portraits/thumb/men/3.jpg", name: "name3@gmail.com" },
+                { url: "https://randomuser.me/api/portraits/thumb/women/4.jpg", name: "name4@gmail.com" },
+                { url: "https://randomuser.me/api/portraits/thumb/men/5.jpg", name: "name5@gmail.com" }
+            ];
+        }
+
+        let list;
+        let selectedList = []
+        inputText.addEventListener('input', (event) => {
+            console.log(event)
+            const typedText = event.currentTarget.value.trim();
+            autocomplete.innerHTML = "";
+
+            if (!typedText) {
+                autocomplete.style.display = "none";
+                return;
+            }
+
+            if (!list) {
+                list = makeApiCall();
+            }
+
+            const filtered = list.filter(it => it.name.toLowerCase().includes(typedText.toLowerCase()));
+
+            if (filtered.length === 0) {
+                autocomplete.style.display = "none";
+                return;
+            }
+
+            autocomplete.style.display = "block";
+
+            filtered.forEach(it => {
+                const liEl = document.createElement("li");
+                liEl.textContent = it.name;
+                liEl.setAttribute("data-info", JSON.stringify(it));
+                autocomplete.appendChild(liEl);
+            });
+        });
+
+        function createChip(name, url) {
+            const chip = document.createElement("div");
+            chip.classList.add("chip");
+
+            const img = document.createElement("img");
+            img.src = url;
+            img.alt = name;
+
+            const text = document.createElement("span");
+            text.classList.add("chip-text");
+            text.textContent = name;
+
+            const removeBtn = document.createElement("span");
+            removeBtn.classList.add("chip-remove");
+            removeBtn.innerHTML = "&times;";
+            removeBtn.addEventListener("click", () => chip.remove());
+
+            chip.appendChild(img);
+            chip.appendChild(text);
+            chip.appendChild(removeBtn);
+
+            return chip;
+        }
+
+        autocomplete.addEventListener('click', (event) => {
+            const clickedLi = event.target.closest("li");
+            if (!clickedLi) return;
+
+            const clickedValue = JSON.parse(clickedLi.dataset.info);
+            if(selectedList.some((it) => it.name === clickedValue.name && it.img == clickedValue.img)) {
+                return
+            }
+            const chip = createChip(clickedValue.name, clickedValue.url);
+            selectedEmailItems.appendChild(chip);
+            selectedList.push(clickedValue)
+
+            inputText.value = "";
+            autocomplete.innerHTML = "";
+            autocomplete.style.display = "none";
+        });
+
+        document.addEventListener("click", (event) => {
+            if (!inputText.contains(event.target) && !autocomplete.contains(event.target)) {
+                autocomplete.style.display = "none";
+            }
+        });
+    </script>
+</body>
+
+</html>

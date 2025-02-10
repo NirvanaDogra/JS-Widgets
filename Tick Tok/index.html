@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        html,
+        body {
+            box-sizing: border-box;
+        }
+
+        .container {
+            display: grid;
+            position: relative;
+            grid-template-columns: auto auto auto;
+            grid-template-rows: 100px 100px 100px;
+            width: 500px;
+            position: relative;
+        }
+
+        .container>div {
+            display: flex;
+
+            justify-content: center;
+            align-items: center;
+            border: 2px solid black;
+            text-align: center;
+        }
+
+        .line {
+            display: none;
+            position: absolute;
+            width: 500px;
+            height: 5px;
+            background-color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Tic Tac game</h1>
+    <p>player 1</p>
+    <div class="container">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div class="line"></div>
+
+    </div>
+    <script>
+        const container = document.querySelector(".container")
+        const children = Array.from(container.children)
+        const currentPlayer = document.querySelector("p")
+        const line = document.querySelector(".line")
+
+        function validateTickTack() {
+            if (children[0].textContent != "" &&
+                children[0].textContent === children[1].textContent &&
+                children[1].textContent === children[2].textContent) {
+                line.style.top = `${50 * 1}px`
+                line.style.display = "block"
+            }
+
+            if (children[3].textContent != "" &&
+                children[3].textContent === children[4].textContent &&
+                children[4].textContent === children[5].textContent) {
+                line.style.top = `${50 * 3}px`
+                line.style.display = "block"
+            }
+
+            if (children[6].textContent != "" &&
+                children[6].textContent === children[7].textContent &&
+                children[7].textContent === children[8].textContent) {
+                line.style.top = `${50 * 5}px`
+                line.style.display = "block"
+            }
+        }
+
+        children.forEach(child => {
+            child.addEventListener('click', () => {
+                if (currentPlayer.textContent === 'player 1') {
+                    child.textContent = "X"
+                    currentPlayer.textContent = 'player 2'
+                } else {
+                    child.textContent = "0"
+                    currentPlayer.textContent = 'player 1'
+                }
+                child.disabled = true;
+                validateTickTack()
+            })
+        });
+    </script>
+</body>
+
+</html>
