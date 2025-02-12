@@ -49,11 +49,12 @@
 <body>
     <button>
         <span>&hearts;</span>
-        <span class="spinner"></span>
-        <span>Like</span></button>
+        <span class="like-button--spinner"></span>
+        <span>Like</span>
+    </button>
     <script>
         const button = document.getElementsByTagName("button").item(0)
-        
+
         function makeBlockingCall() {
             button.setAttribute("disabled", "true")
             button.classList.toggle("active")
